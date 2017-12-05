@@ -4,7 +4,6 @@ import sys
 import h5py
 import numpy as np
 import pandas as pd
-import librosa
 import matplotlib.pyplot as plt
 #from IPython.display import clear_output
 from keras.models import Sequential
