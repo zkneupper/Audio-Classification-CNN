@@ -5,7 +5,7 @@ import h5py
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-#from IPython.display import clear_output
+
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Convolution2D, MaxPooling2D
@@ -24,7 +24,6 @@ class User_Defined_Callback(Callback):
     def __init__(self):
 
       # Create a variable for the project root directory
-#        self.proj_root = os.path.join(os.pardir)
         self.proj_root = os.path.join(os.path.join(os.pardir), os.path.join(os.pardir))
 
       # Save the path to the models folder
@@ -69,20 +68,22 @@ class User_Defined_Callback(Callback):
         self.val_losses.append(logs.get('val_loss'))
         self.i += 1
 
-        # save log dataframe
+        # Create log dataframe
         self.df_log = pd.DataFrame({'epoch_x': self.x,
                                'accuracy' : self.accuracy,
                                'val_accuracy' : self.val_accuracy,
                                'losses' : self.losses,
                                'val_losses' : self.val_losses,
-                               'fig' : self.fig,
                                'logs' : self.logs})
-        
+
+        # Reorder dataframe columns
+        self.df_log = self.df_log[['epoch_x', 'accuracy', 'val_accuracy', 'losses', 'val_losses', 'logs']]
+
+        # Save log dataframe to csv
         self.df_log.to_csv(self.log_file_path)
 
         
         # Create summary plots of Loss vs Epoch and Accuracy vs Epoch
-        clear_output(wait=True)
         
         fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=(8,4))
 
@@ -103,7 +104,7 @@ class User_Defined_Callback(Callback):
         plt.tight_layout()
         
         plt.savefig(self.log_fig_path, dpi=300)
-        plt.show()
+#        plt.show()
 
 
 
@@ -154,7 +155,6 @@ class SOUNDNET:
         print('Setting file paths...')
 
       # Create a variable for the project root directory
-#        self.proj_root = os.path.join(os.pardir)
         self.proj_root = os.path.join(os.path.join(os.pardir), os.path.join(os.pardir))
 
 
@@ -283,3 +283,5 @@ if __name__ == '__main__':
     soundnet.create_data_objects()
     soundnet.set_callbacks()
     soundnet.train_soundnet()
+
+
