@@ -24,7 +24,8 @@ class User_Defined_Callback(Callback):
     def __init__(self):
 
       # Create a variable for the project root directory
-        self.proj_root = os.path.join(os.pardir)
+#        self.proj_root = os.path.join(os.pardir)
+        self.proj_root = os.path.join(os.path.join(os.pardir), os.path.join(os.pardir))
 
       # Save the path to the models folder
         self.models_dir = os.path.join(self.proj_root, "models")
@@ -153,7 +154,9 @@ class SOUNDNET:
         print('Setting file paths...')
 
       # Create a variable for the project root directory
-        self.proj_root = os.path.join(os.pardir)
+#        self.proj_root = os.path.join(os.pardir)
+        self.proj_root = os.path.join(os.path.join(os.pardir), os.path.join(os.pardir))
+
 
       # Save the path to the folder that contains the interim data sets for modeling: /data/interim
         self.interim_data_dir = os.path.join(self.proj_root, "data", "interim")
@@ -224,11 +227,8 @@ class SOUNDNET:
         self.callbacks_list = [self.checkpoint, self.user_defined_callback]
 
 
-
-
-
-    def train_convnet(self):
-        print('Training convnet...')
+    def train_soundnet(self):
+        print('Training SOUNDNET...')
         # For reproducibility
         np.random.seed(42)
 
@@ -266,7 +266,7 @@ class SOUNDNET:
         self.model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
       # Fit model on training data
-        self.history = self.model.fit(self.X_train, self.Y_train,  batch_size=100, epochs=50,  verbose=1,  callbacks=callbacks_list, validation_data=(X_test, self.Y_test), shuffle="batch")
+        self.history = self.model.fit(self.X_train, self.Y_train,  batch_size=100, epochs=50,  verbose=1,  callbacks=self.callbacks_list, validation_data=(self.X_test, self.Y_test), shuffle="batch")
 
       # Evaluate model on test data
         self.score = self.model.evaluate(self.X_test, self.Y_test, verbose=0)
@@ -282,4 +282,4 @@ if __name__ == '__main__':
     soundnet.set_paths()
     soundnet.create_data_objects()
     soundnet.set_callbacks()
-    soundnet.train_convnet()
+    soundnet.train_soundnet()
