@@ -4,6 +4,16 @@ import time
 import psutil
 
 def computer_sleep(seconds_until_sleep=5, verbose=1):
+    """Function will put the computer in sleep mode.
+
+    Implemented for OSX and LINUX. Not yet implemented for WINDOWS.
+
+    Args:
+        seconds_until_sleep: The number of seconds until the computer 
+            goes to sleep.
+        verbose: Verbosity mode, 0, 1. verbose=1 displays a countdown.
+
+    """
     
     range_top = int(seconds_until_sleep * 10) - 1    
     spinner_1 = spinning_cursor()
