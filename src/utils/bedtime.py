@@ -26,7 +26,8 @@ def computer_sleep(seconds_until_sleep=5, verbose=1):
                              str(1+(_//10))+ " seconds "+ spinner_2.__next__())
             sys.stdout.flush()
             time.sleep(0.1)
-            sys.stdout.write('\r')
+            sys.stdout.write("\b")
+            sys.stdout.flush()
 
         sys.stdout.write('\rGoodnight                                 ')
         time.sleep(1)
@@ -39,7 +40,7 @@ def computer_sleep(seconds_until_sleep=5, verbose=1):
         os.system("pmset sleepnow")
     else:
         if psutil.LINUX:
-            os.system("systemctl hibernate")
+            os.system("systemctl suspend")
         else:
             if psutil.WINDOWS:
                 sys.exit("computer_sleep Not Implemented for WINDOWS")      
